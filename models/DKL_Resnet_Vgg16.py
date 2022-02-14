@@ -17,8 +17,12 @@ from tensorflow.python.keras.models import Sequential
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from tensorflow.keras.models import Model
 import kullback_pos_neg_selection as pndkl
+import kullback_pos_selection as pdkl
+import kullback_neg_selection as ndkl
 
 pndkl.getcsv()
+pdkl.pgetcsv()
+ndkl.n_getcsv()
 
 # *******************positive negative kullback divergence************************************
 df = pd.read_csv("../kullback_positive_negative.csv")
@@ -43,7 +47,7 @@ lower_DKL_layers = []
 [lower_DKL_layers.append(x) for x in new_dict if x not in lower_DKL_layers]
 
 # sort list,the first 5
-print(lower_DKL_layers[:5])
+#print(lower_DKL_layers[:5])
 
 # create an array to store upper kullback layers
 upper_new_dict = []
@@ -55,7 +59,7 @@ upper_DKL_layers = []
 [upper_DKL_layers.append(z) for z in upper_new_dict if z not in upper_DKL_layers]
 ##can use the upper_DKL_layers or the lower_DKL_layers depending on the need
 # *************************positive DKL*******************************************
-df_positive = pd.read_csv("../kullback_positive_negative.csv")
+df_positive = pd.read_csv("../kullback_positive.csv")
 df_positive['layer2_layer1'] = df_positive['Layer2'] - df_positive['Layer1']
 # print(df)
 positive_updated_df = df_positive.loc[df_positive['layer2_layer1'] == 1]
@@ -64,7 +68,7 @@ p_lower_DKL = positive_updated_df.sort_values('DKL')
 # return the lower layers
 p_ascending = p_lower_DKL.head()
 
-p_higher_DKL = positive_updated_df.sort_values('DKL', p_ascending=False)
+p_higher_DKL = positive_updated_df.sort_values('DKL', ascending=False)
 # return the lower layers
 p_descending = p_higher_DKL.head()
 # create an array to store lower layers
@@ -77,7 +81,7 @@ p_lower_DKL_layers = []
 [p_lower_DKL_layers.append(x) for x in p_new_dict if x not in p_lower_DKL_layers]
 
 # sort list,the first 5
-print(p_lower_DKL_layers[:5])
+#print(p_lower_DKL_layers[:5])
 
 # create an array to store upper kullback layers
 p_upper_new_dict = []
@@ -88,7 +92,7 @@ for n in range(len(p_descending)):
 p_upper_DKL_layers = []
 [p_upper_DKL_layers.append(z) for z in p_upper_new_dict if z not in p_upper_DKL_layers]
 # ***********************negative DKL*********************************************
-df_negative = pd.read_csv("../kullback_positive_negative.csv")
+df_negative = pd.read_csv("../kullback_negative.csv")
 df_negative['layer2_layer1'] = df_negative['Layer2'] - df_negative['Layer1']
 # print(df)
 n_updated_df = df_negative.loc[df_negative['layer2_layer1'] == 1]
@@ -97,7 +101,7 @@ n_lower_DKL = n_updated_df.sort_values('DKL')
 # return the lower layers
 n_ascending = n_lower_DKL.head()
 
-n_higher_DKL = n_updated_df.sort_values('DKL', n_ascending=False)
+n_higher_DKL = n_updated_df.sort_values('DKL', ascending=False)
 # return the lower layers
 n_descending = n_higher_DKL.head()
 # create an array to store lower layers
@@ -110,7 +114,7 @@ n_lower_DKL_layers = []
 [n_lower_DKL_layers.append(x) for x in n_new_dict if x not in n_lower_DKL_layers]
 
 # sort list,the first 5
-print(n_lower_DKL_layers[:5])
+#print(n_lower_DKL_layers[:5])
 
 # create an array to store upper kullback layers
 n_upper_new_dict = []

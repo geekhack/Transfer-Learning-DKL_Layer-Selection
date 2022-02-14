@@ -15,7 +15,7 @@ from tensorflow.keras.applications.efficientnet import EfficientNetB1 as efficie
 from sklearn.metrics.pairwise import cosine_similarity
 import csv
 
-model_name = vgg16
+model_name = resnet50
 input_t = keras.Input(shape=(224, 224, 3))
 model = model_name(include_top=False,
                    weights="imagenet",
@@ -154,6 +154,8 @@ for lyr in convolved_layer_names:
 
                 # calculate softmax function
                 # calculate softmax function
+
+
         def softMax(s_et):
             e_set = np.exp(s_et - np.max(s_et))
             return e_set / e_set.sum(axis=0)
@@ -170,9 +172,9 @@ for lyr in convolved_layer_names:
 # print(jdk)
 
 # then pick two sets each and check their kullback divergence
-for x in range(1,len(layered_jdk)):
+for x in range(1, len(layered_jdk)):
     print("***processing***")
-    #print(x, layered_jdk[x])
+    # print(x, layered_jdk[x])
 
 s = 0
 # put the layers in a dictionary and rank them
@@ -187,7 +189,7 @@ for i in range(len(jdk)):
             # print("layer:", p, " and layer: ", i + 1)
             dif_1 = len(np.array(jdk[p])) - len(np.array(jdk[i + 1]))
             print(dif_1)
-            #new_jdk = np.pad((0, dif_1), jdk[p], 'constant').reshape(1, -1)
+            # new_jdk = np.pad((0, dif_1), jdk[p], 'constant').reshape(1, -1)
             new_jdk = np.array(jdk[p]).reshape(1, -1)
             new_i_jdk = np.array(jdk[i + 1]).reshape(1, -1)
 
@@ -197,10 +199,10 @@ for i in range(len(jdk)):
             m_no = [p, i + 1, sum(kl_pq)]
             other.append(m_no)
 
-with open('kullback_negative.csv', 'w', encoding='UTF8', newline='') as f:
 
-    writer = csv.writer(f)  # write the header
-    writer.writerow(["Layer1", "Layer2", "DKL"])
-    for l_item in other:
-        writer.writerow(l_item)
-
+def n_getcsv():
+    with open('../kullback_negative.csv', 'w', encoding='UTF8', newline='') as f:
+        writer = csv.writer(f)  # write the header
+        writer.writerow(["Layer1", "Layer2", "DKL"])
+        for l_item in other:
+            writer.writerow(l_item)

@@ -217,7 +217,7 @@ for i in range(len(jdk)):
 
 
 def getcsv():
-    with open('kullback_positive_negative.csv', 'w', encoding='UTF8', newline='') as f:
+    with open('../kullback_positive_negative.csv', 'w', encoding='UTF8', newline='') as f:
         writer = csv.writer(f)  # write the header
         writer.writerow(["Layer1", "Layer2", "DKL"])
         for l_item in other:

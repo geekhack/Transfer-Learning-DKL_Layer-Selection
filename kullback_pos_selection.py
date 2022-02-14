@@ -16,7 +16,7 @@ from tensorflow.keras.applications.efficientnet import EfficientNetB1 as efficie
 from sklearn.metrics.pairwise import cosine_similarity
 import csv
 
-model_name = vgg16
+model_name = resnet50
 input_t = keras.Input(shape=(224, 224, 3))
 model = model_name(include_top=False,
                    weights="imagenet",
@@ -171,7 +171,7 @@ for lyr in convolved_layer_names:
 # print(jdk)
 
 # then pick two sets each and check their kullback divergence
-for x in range(1,len(layered_jdk)):
+for x in range(1, len(layered_jdk)):
     print("***processing***")
     print(x, layered_jdk[x])
 
@@ -196,9 +196,10 @@ for i in range(len(jdk)):
             m_no = [p, i + 1, sum(kl_pq)]
             other.append(m_no)
 
-with open('kullback_positive.csv', 'w', encoding='UTF8', newline='') as f:
 
-    writer = csv.writer(f)  # write the header
-    writer.writerow(["Layer1", "Layer2", "DKL"])
-    for l_item in other:
-        writer.writerow(l_item)
+def pgetcsv():
+    with open('../kullback_positive.csv', 'w', encoding='UTF8', newline='') as f:
+        writer = csv.writer(f)  # write the header
+        writer.writerow(["Layer1", "Layer2", "DKL"])
+        for l_item in other:
+            writer.writerow(l_item)
