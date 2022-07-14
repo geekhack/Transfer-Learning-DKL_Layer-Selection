@@ -143,7 +143,7 @@ y_train = tf.one_hot(y_train.astype(np.int32), depth=10)
 y_test = tf.one_hot(y_test.astype(np.int32), depth=10)
 
 inputs = tf.keras.layers.Input(shape=(32, 32, 3))
-model_name = resnet50
+model_name = vgg16
 input_t = (32,32,3)
 model = model_name(include_top=False,
                    weights="imagenet",

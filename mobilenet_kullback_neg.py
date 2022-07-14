@@ -18,20 +18,18 @@ from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from tensorflow.keras.models import Model
 
 print(tf.__version__)
-df = pd.read_csv("mobilenetv2_kullback_positive_neg.csv")
-print(df)
+df = pd.read_csv("mobilenetv2_pure_kullback_negative.csv")
 df['layer2_layer1'] = df['Layer2'] -df['Layer1']
-#print(df)
-updated_df = df.loc[df['layer2_layer1'] == 1]
-
-lower_DKL = updated_df.sort_values('DKL')
-# return the lower layers
+lower_DKL = df.sort_values('DKL')
+# # return the lower layers
 ascending = lower_DKL.head()
-
-higher_DKL = updated_df.sort_values('DKL', ascending=False)
-# return the lower layers
+print(ascending)
+#
+higher_DKL = df.sort_values('DKL', ascending=False)
+# # return the lower layers
 descending = higher_DKL.head()
-#create an array to store lower layers
+
+# #create an array to store lower layers
 new_dict =[]
 for m in range(len(ascending)):
     new_dict.append(int(ascending.iloc[m]['Layer1']))
@@ -39,6 +37,7 @@ for m in range(len(ascending)):
 
 lower_DKL_layers = []
 [lower_DKL_layers.append(x) for x in new_dict if x not in lower_DKL_layers]
+lower_DKL_layers.sort()
 print("lower layers",lower_DKL_layers)
 
 #create an array to store upper kullback layers
@@ -49,5 +48,5 @@ for n in range(len(descending)):
 
 upper_DKL_layers = []
 [upper_DKL_layers.append(z) for z in upper_new_dict if z not in upper_DKL_layers]
-
+upper_DKL_layers.sort()
 print("upper layers",upper_DKL_layers)

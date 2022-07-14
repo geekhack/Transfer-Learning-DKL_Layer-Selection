@@ -194,7 +194,7 @@ for i in range(len(jdk)):
             new_i_jdk = np.array(jdk[i + 1]).reshape(1, -1)
 
             kl_pq = rel_entr(np.ravel(new_jdk), np.ravel(new_i_jdk))
-            print("layer:", p, " and layer: ", i + 1, ':KL(P ||2 Q): %.3f nats' % sum(kl_pq))
+            #print("layer:", p, " and layer: ", i + 1, ':KL(P ||2 Q): %.3f nats' % sum(kl_pq))
 
             m_no = [p, i + 1, sum(kl_pq)]
             other.append(m_no)
